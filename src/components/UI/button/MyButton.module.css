@@ -1,0 +1,13 @@
+.MyBtn {
+    padding: 5px 15px;
+    border: 2px solid #daa520;
+    border-radius: 5px;
+    background-color: #f0f8ff;
+    cursor: pointer;
+    transition: 300ms;
+}
+
+.MyBtn:hover {
+    border: 2px solid #ffa54c;
+    background: #ffffff;
+}
