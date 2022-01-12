@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    background: #eae9e9;
+}
+
+.container {
+    width: 60vw;
+    margin: 0 auto;
+}
+
+.post {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid #daa520;
+    background-color: #b0e0e6;
+    margin: 15px auto;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.post__content {
+    display: flex;
+}
+
+.post__add {
+    margin-top: 10px;
+
+}
+
+.post__add-input {
+    border: 2px solid #daa520;
+    border-radius: 5px;
+}
