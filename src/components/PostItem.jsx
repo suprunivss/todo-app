@@ -1,15 +1,15 @@
 import React from 'react';
 import MyButton from './UI/button/MyButton';
 
-const PostItem = (props) => {
+const PostItem = ({ index, post, remove }) => {
   return (
     <div className="post">
       <div className="post__content">
-        <h4>{ props.index + 1 }.</h4>
+        <h4>{ index }.</h4>
         { "\u00A0" }
-        <p>{ props.item }</p>
+        <p>{ post.title }</p>
       </div>
-      <MyButton>Delete</MyButton>
+      <MyButton onClick={() => remove(post)}>Delete</MyButton>
     </div>
   );
 };
