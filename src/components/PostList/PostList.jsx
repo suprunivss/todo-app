@@ -1,7 +1,7 @@
 import React from 'react';
-import PostItem from './PostItem';
+import PostItem from '../PostItem';
 
-const PostList = (props) => {
+export function PostList(props) {
   return (
     <div>
       { props.items.map((post, index) => {
@@ -10,5 +10,3 @@ const PostList = (props) => {
     </div>
   );
 };
-
-export default PostList;

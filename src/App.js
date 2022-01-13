@@ -20,7 +20,7 @@ function App() {
   return (
     <div className="App container">
       <PostForm create={createPost}/>
-      {items.length !== 0
+      {items.length
         ? <PostList remove={removePost} items={items}/>
         : <h2 style={{textAlign: 'center', margin: 30, fontSize: 30}}>Todo List Empty</h2>
       }
