@@ -12,3 +12,9 @@ html {
     width: 60vw;
     margin: 0 auto;
 }
+
+.post__empty {
+    text-align: center;
+    margin: 30px;
+    font-size: 30px;
+}

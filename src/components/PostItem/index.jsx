@@ -1,1 +1,1 @@
-export { PostItem as default} from './PostItem';
+export { PostItem as default } from './PostItem';
