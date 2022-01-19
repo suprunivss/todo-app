@@ -1,39 +1,24 @@
-import React from 'react';
-import Select from '../UI/Select';
+import React, { useMemo } from 'react';
 import Input from '../UI/Input';
 import classes from './PostFilter.module.css';
 
-export function PostFilter({ items, setItems, filter, setFilter }) {
-  const sortPosts = (sort) => {
-    setFilter({...filter, sort: sort});
-    if (sort === 'title') {
-      setItems([...items].sort((a, b) => a.title.localeCompare(b.title)));
-    } else if (sort === 'title-reverse') {
-      setItems([...items].sort((a, b) => b.title.localeCompare(a.title)));
+export function PostFilter({ items, filter, setFilter, setPostsFiltering }) {
+  const filterPosts = useMemo(() => {
+    if (filter) {
+      return [...items].filter(item => item.title.toLowerCase().includes(filter.toLowerCase()));
     }
-  };
+    return items;
+  }, [items, filter]);
 
-  const filterPost = (event) => {
-    setFilter({ ...filter, query: event.target.value })
-  }
+  setPostsFiltering(filterPosts);
 
   return (
     <div className={ classes.post__filter }>
-      <Select
-        disabled={ !items.length }
-        value={ filter.sort }
-        onChange={ sortPosts }
-        defaultValue='Sort'
-        options={ [
-          { value: 'title', name: 'Sorting (A to Z)' },
-          { value: 'title-reverse', name: 'Sorting (Z to A)' },
-        ] }
-      />
       <Input
-        value={ filter.query }
-        onChange={filterPost}
-        type='text'
-        placeholder='Search...'
+        value={ filter }
+        onChange={ (event) => setFilter(event.target.value) }
+        type="text"
+        placeholder="Search..."
       />
     </div>
   );
