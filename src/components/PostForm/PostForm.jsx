@@ -3,39 +3,44 @@ import Input from '../UI/Input';
 import Button from '../UI/Button';
 import classes from './PostForm.module.css';
 
-export function PostForm({ create }) {
+function PostFormComponent({ onCreatePost }) {
   const [post, setPost] = useState({ title: '' });
   const [disabled, setDisabled] = useState(true);
 
-  function addNewPost(e) {
-    e.preventDefault();
+  function onAddNewPost(event) {
+    event.preventDefault();
 
     const newPost = {
-      ...post, id: Date.now(),
+      ...post,
+      id: Date.now(),
     };
 
-    create(newPost);
+    onCreatePost(newPost);
     setDisabled(true);
     setPost({ title: '' });
   }
 
+  const onFilterPosts = ({ target }) => {
+    setPost({ title: target.value });
+    setDisabled(!target.value);
+  };
+
   return (
-    <form className={ classes.post__add }>
+    <form className={ classes.post }>
       <Input
         value={ post.title }
         type="text"
-        onChange={ e => {
-          setPost({ title: e.target.value });
-          setDisabled(!e.target.value);
-        } }
+        onChange={ onFilterPosts }
       />
       <Button
         type="submit"
         disabled={ disabled }
-        onClick={ addNewPost }
+        onClick={ onAddNewPost }
       >
         + Add Item
       </Button>
     </form>
   );
 }
+
+export const PostForm = React.memo(PostFormComponent);

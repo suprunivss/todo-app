@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './styles/App.css';
 import PostList from './components/PostList';
 import PostForm from './components/PostForm';
@@ -6,47 +6,47 @@ import PostSort from './components/PostSort';
 import PostFilter from './components/PostFilter';
 
 function App() {
-  const [items, setItems] = useState([]);
-  const [filter, setFilter] = useState('');
-  const [sort, setSort] = useState('');
-  const [postsFiltering, setPostsFiltering] = useState('')
+  const [posts, setPosts] = useState([]);
+  const [filterString, setFilterString] = useState('');
+  const [sortOption, setSortOption] = useState('');
 
   useEffect(() => {
-    setItems(JSON.parse(localStorage.getItem('item')));
+    const getLocalStorageItem = JSON.parse(localStorage.getItem('item'));
+    if (getLocalStorageItem !== null) {
+      setPosts(getLocalStorageItem);
+    }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('item', JSON.stringify(items));
-  }, [items]);
+    localStorage.setItem('item', JSON.stringify(posts));
+  }, [posts]);
 
-  const createPost = (newPost) => {
-    setItems((prevItems) => ([...prevItems, newPost]));
-    setFilter('');
-    setSort('');
-  };
+  const onCreatePost = useCallback((newPost) => {
+    setPosts((prevPosts) => ([...prevPosts, newPost]));
+    setFilterString('');
+  }, [setPosts, setFilterString]);
 
-  const removePost = (post) => {
-    setItems(items.filter(item => item.id !== post.id));
-    setFilter('');
-    setSort('');
+  const onRemovePost = (post) => {
+    setPosts(posts.filter(({ id }) => id !== post.id));
+    setFilterString('');
+    setSortOption('');
   };
+  const filteredPosts = posts.filter(({ title }) => title.toLowerCase().includes(filterString.toLowerCase()));
 
   return (
     <div className="App post container">
-      <PostForm create={ createPost }/>
+      <PostForm onCreatePost={ onCreatePost }/>
       <PostSort
-        sort={ sort }
-        setSort={ setSort }
-        items={ items }
-        setItems={ setItems }/>
+        sort={ sortOption }
+        setSort={ setSortOption }
+        items={ posts }
+        setItems={ setPosts }/>
       <PostFilter
-        setPostsFiltering={setPostsFiltering}
-        items={items}
-        filter={filter}
-        setFilter={setFilter}
+        filterString={ filterString }
+        setFilterString={ setFilterString }
       />
-      { items.length
-        ? <PostList remove={ removePost } items={ postsFiltering }/>
+      { posts.length
+        ? <PostList remove={ onRemovePost } items={ filteredPosts }/>
         : <h2 className="post__empty">Todo List Empty</h2>
       }
     </div>

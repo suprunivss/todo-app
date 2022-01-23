@@ -1,25 +1,18 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import Input from '../UI/Input';
 import classes from './PostFilter.module.css';
 
-export function PostFilter({ items, filter, setFilter, setPostsFiltering }) {
-  const filterPosts = useMemo(() => {
-    if (filter) {
-      return [...items].filter(item => item.title.toLowerCase().includes(filter.toLowerCase()));
-    }
-    return items;
-  }, [items, filter]);
-
-  setPostsFiltering(filterPosts);
-
+function PostFilterComponent({ filterString, setFilterString }) {
   return (
-    <div className={ classes.post__filter }>
+    <div className={ classes.post }>
       <Input
-        value={ filter }
-        onChange={ (event) => setFilter(event.target.value) }
+        value={ filterString }
+        onChange={ ({ target }) => setFilterString(target.value) }
         type="text"
         placeholder="Search..."
       />
     </div>
   );
 }
+
+export const PostFilter = React.memo(PostFilterComponent);
