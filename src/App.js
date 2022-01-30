@@ -12,6 +12,7 @@ function App() {
 
   useEffect(() => {
     const getLocalStorageItem = JSON.parse(localStorage.getItem('item'));
+
     if (getLocalStorageItem !== null) {
       setPosts(getLocalStorageItem);
     }
@@ -21,26 +22,37 @@ function App() {
     localStorage.setItem('item', JSON.stringify(posts));
   }, [posts]);
 
+  const sortPosts = useCallback((value) => {
+    const variants = {
+      'title': (a, b) => a.title.localeCompare(b.title),
+      'title-reverse': (a, b) => b.title.localeCompare(a.title),
+    };
+
+    setSortOption(value);
+    setPosts(prevState => [...prevState].sort(variants[value]));
+  }, [setSortOption, setPosts]);
+
   const onCreatePost = useCallback((newPost) => {
     setPosts((prevPosts) => ([...prevPosts, newPost]));
-    setFilterString('');
-  }, [setPosts, setFilterString]);
+    if (sortOption) {
+      sortPosts(sortOption);
+    }
+  }, [setPosts, sortOption, sortPosts]);
 
   const onRemovePost = (post) => {
     setPosts(posts.filter(({ id }) => id !== post.id));
-    setFilterString('');
-    setSortOption('');
   };
+
   const filteredPosts = posts.filter(({ title }) => title.toLowerCase().includes(filterString.toLowerCase()));
 
   return (
     <div className="App post container">
       <PostForm onCreatePost={ onCreatePost }/>
       <PostSort
-        sort={ sortOption }
-        setSort={ setSortOption }
-        items={ posts }
-        setItems={ setPosts }/>
+        sortOption={ sortOption }
+        posts={ posts }
+        sortPosts={ sortPosts }
+      />
       <PostFilter
         filterString={ filterString }
         setFilterString={ setFilterString }
