@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import './styles/App.css';
 import PostList from './components/PostList';
 import PostForm from './components/PostForm';
 import PostSort from './components/PostSort';
 import PostFilter from './components/PostFilter';
+import './styles/style.css'
 
 function App() {
   const [posts, setPosts] = useState([]);
