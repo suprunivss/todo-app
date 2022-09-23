@@ -8,7 +8,9 @@ export function PostItem({ index, post, remove }) {
       <div className={ classes.post__content }>
         <h4>{ index }.</h4>
         { '\u00A0' }
-        <p>{ post.title }</p>
+        <div className={classes.post__text__wrapper}>
+          <span>{ post.title }</span>
+        </div>
       </div>
       <Button onClick={ () => remove(post) }>Delete</Button>
     </div>

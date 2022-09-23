@@ -7,8 +7,16 @@
     margin: 15px auto;
     padding: 10px 20px;
     border-radius: 10px;
+    gap: 10px;
 }
 
 .post__content {
     display: flex;
+    overflow: hidden;
+}
+
+.post__text__wrapper {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
